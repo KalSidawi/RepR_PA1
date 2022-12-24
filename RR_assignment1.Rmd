@@ -1,0 +1,55 @@
+---
+title: "Reproducible Research: Peer Assessment 1"
+author: "Kal Elsidawi"
+date: "`r Sys.Date()`"
+output: 
+        html_document
+keep_md: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Sourcing the assignment instructions and the related raw/processed dataset 
+After forking the assignment from GitHub, find below the list of files:
+
+```{r}
+list.files(recursive = TRUE)
+```
+Note that the instructions are found in the **instructions.pdf** file under the **doc** directory
+The dataset is in the **activity.zip** file
+
+## Loading and preprocessing the data
+The dataset is stored in a tibble called *activity* 
+```{r}
+library(data.table)
+library(tibble)
+library(tidyverse)
+unzip("activity.zip", list = TRUE)
+activity <- as_tibble(read.table(file = unzip("activity.zip", "activity.csv"), header = TRUE,sep = ",",
+                       na.strings = NA, colClasses = c("numeric","Date","numeric") ))
+
+```
+
+## What is mean total number of steps taken per day?
+
+First of all, create a new data frame **dailySteps** that has TotalSteps taken
+per day then create a histogram
+
+```{r}
+dailySteps <- activity %>% group_by(date) %>% summarise(TotalSteps = sum(steps, na.rm = TRUE))
+hist(dailySteps$TotalSteps)
+
+```
+
+Histogram of the total number of steps taken each day
+## What is the average daily activity pattern?
+
+
+
+## Imputing missing values
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?
